@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX ,StepBack} from "lucide-react";
 
 const Instruction: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -104,6 +104,8 @@ const Instruction: React.FC = () => {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
+
+      
       {/* Animated Background */}
       <canvas
         ref={canvasRef}
@@ -127,6 +129,8 @@ const Instruction: React.FC = () => {
             {speechEnabled ? <Volume2 size={24} /> : <VolumeX size={24} />}
           </button>
 
+          
+
           <h1 className="text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400">
             Instructions
           </h1>
@@ -142,6 +146,13 @@ const Instruction: React.FC = () => {
           >
             Begin Game 🎮
           </button>
+          <button
+            onClick={() => navigate("/alphabet-game")}
+            className="px-8 py-3 text-lg font-semibold rounded-full bg-cyan-500 hover:bg-cyan-600 text-white shadow-lg transition-all duration-300 m-1"
+          >
+            Go back          </button>
+
+          
         </div>
       </div>
     </div>

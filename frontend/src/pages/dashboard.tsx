@@ -8,6 +8,7 @@ import {
   User, Calendar, Clock, TrendingUp, Filter, Award, Target,
   ChevronDown, Star, Trophy, Zap, Brain, Play, BookOpen, PenTool, Focus
 } from 'lucide-react';
+import Visual from '../components/visuals'
 
 import axios from 'axios'
 import { log } from 'console';
@@ -18,6 +19,7 @@ const Dashboard = () => {
   const [user, setUser] = useState('')
   const [games, setGames] = useState('')
   const [data, setData] = useState('')
+  const [Aidata , setAIData ] = useState('')
 
   // Category colors matching NeuroVia theme
   const categoryColors = {
@@ -142,6 +144,19 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${BACKEND_URL}/api/dashboard/report`, { withCredentials: true });
+        console.log("API response:", res.data); // 👈 debug
+        setAIData(res.data); // 👈 use dataset
+      } catch (error) {
+        console.error("Error fetching dataset:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
 
   console.log(data);
 
@@ -175,6 +190,8 @@ const Dashboard = () => {
   };
 
   const insights = getPerformanceInsights();
+
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
@@ -309,7 +326,7 @@ const Dashboard = () => {
                         className="px-4 py-2 rounded-full text-sm font-medium text-white shadow-lg"
                         style={{ backgroundColor: categoryColors[game.category] }}
                       >
-                        { }
+                        { game.world }
                       </span>
                     </td>
                     <td className="py-4 px-4 text-gray-600">{new Date(game.timestamp).toISOString().split("T")[0]}</td>
@@ -400,15 +417,15 @@ const Dashboard = () => {
             <div className="space-y-4">
               <div className="p-5 bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl border-l-4 border-orange-500 shadow-sm">
                 <p className="text-orange-800 font-semibold flex items-center mb-2">
-                  🚀 Space Mission Challenge
+                  {Aidata && Aidata.summary.mostPlayedGame}
                 </p>
-                <p className="text-orange-700 text-sm">Your focus is improving! Try short ADHD adventures to boost concentration skills even more.</p>
+                <p className="text-orange-700 text-sm">{Aidata && Aidata.trend}</p>
               </div>
               <div className="p-5 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border-l-4 border-green-500 shadow-sm">
                 <p className="text-green-800 font-semibold flex items-center mb-2">
-                  🌲 Forest Explorer
+                  AI GUIDANCE
                 </p>
-                <p className="text-green-700 text-sm">Great reading progress! Continue your magical story adventures to unlock new reading powers.</p>
+                <p className="text-green-700 text-sm">{Aidata && Aidata.Guidance}</p>
               </div>
               <div className="p-5 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl border-l-4 border-blue-500 shadow-sm">
                 <p className="text-blue-800 font-semibold flex items-center mb-2">
@@ -425,7 +442,7 @@ const Dashboard = () => {
               <Trophy className="w-5 h-5 mr-2 text-yellow-500" />
               🏅 Achievement Badges
             </h3>
-            <div className="space-y-4">
+            {/* <div className="space-y-4">
               {achievements.map((achievement, index) => (
                 <div
                   key={index}
@@ -453,7 +470,9 @@ const Dashboard = () => {
                   )}
                 </div>
               ))}
-            </div>
+            </div> */}
+
+            <Visual summary = {Aidata} />
           </div>
         </div>
       </div>

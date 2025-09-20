@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
-import { Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX ,StepBack } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 type GameCard = {
@@ -177,6 +177,13 @@ const Games: React.FC = () => {
           aria-label={speechEnabled ? "Disable speech" : "Enable speech"}
         >
           {speechEnabled ? <Volume2 size={24} /> : <VolumeX size={24} />}
+        </button>
+        <button
+          onClick={goto => navigate('/')}
+          className="absolute top-6 left-6 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 text-white hover:bg-white/30 transition-all duration-300 font-semibold flex"
+          aria-label={speechEnabled ? "Disable speech" : "Enable speech"}
+        >
+          <StepBack />Home
         </button>
 
         {/* Title */}

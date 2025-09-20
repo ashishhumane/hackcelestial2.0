@@ -15,6 +15,7 @@ import ProtectedRoute from "./components/protectedRoute";
 import Instruction2 from "./pages/dyslexia/instruction2";
 import Instruction3 from "./pages/dyslexia/instruction3";
 
+
 const queryClient = new QueryClient();
 
 const App = () => (

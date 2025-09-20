@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import Geometric from "@/components/Geometric";
+import AutoLogout from "../components/autoLogout";
 
 
 const Index = () => {
@@ -33,6 +34,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <AutoLogout />
       {showIntro ? (
         <section className="h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-800 via-white-500 to-black-600 text-white transition-opacity duration-700">
           <h1 className="text-6xl font-bold mb-8 animate-bounce">NeuroVia</h1>

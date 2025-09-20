@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -26,7 +27,7 @@ export const BubbleGame: React.FC = () => {
     const animationRef = useRef<number>();
     const bubblesRef = useRef<Bubble[]>([]);
     const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
+    const navigate = useNavigate()
     const [gameState, setGameState] = useState<GameState>({
         score: 0,
         targetLetter: "e",
@@ -388,6 +389,25 @@ export const BubbleGame: React.FC = () => {
                         🛑 Stop Game
                     </button>
                 )}
+
+                <button
+                        onClick={goto => navigate("/dyslexia-games")}
+                        style={{
+                            padding: "12px 25px",
+                            fontSize: "1.2rem",
+                            fontWeight: "bold",
+                            color: "#fff",
+                            background: "linear-gradient(to right, #ff4d4d, #cc0000)",
+                            border: "none",
+                            borderRadius: 10,
+                            cursor: "pointer",
+                            boxShadow: "0 0 10px rgba(255,0,0,0.6)",
+                            margin : "2px"
+                        
+                        }}
+                    >
+                        Back to Game 
+                    </button>
             </div>
         </div>
     );
