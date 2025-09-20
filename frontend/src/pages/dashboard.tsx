@@ -19,7 +19,7 @@ const Dashboard = () => {
   const [user, setUser] = useState('')
   const [games, setGames] = useState('')
   const [data, setData] = useState('')
-  const [Aidata , setAIData ] = useState('')
+  const [Aidata, setAIData] = useState('')
 
   // Category colors matching NeuroVia theme
   const categoryColors = {
@@ -191,7 +191,7 @@ const Dashboard = () => {
 
   const insights = getPerformanceInsights();
 
-  
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
@@ -326,7 +326,7 @@ const Dashboard = () => {
                         className="px-4 py-2 rounded-full text-sm font-medium text-white shadow-lg"
                         style={{ backgroundColor: categoryColors[game.category] }}
                       >
-                        { game.world }
+                        {game.world}
                       </span>
                     </td>
                     <td className="py-4 px-4 text-gray-600">{new Date(game.timestamp).toISOString().split("T")[0]}</td>
@@ -472,7 +472,7 @@ const Dashboard = () => {
               ))}
             </div> */}
 
-            <Visual summary = {Aidata} />
+            <Visual summary={Aidata} />
           </div>
         </div>
       </div>

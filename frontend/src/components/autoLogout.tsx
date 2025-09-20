@@ -12,6 +12,7 @@ const AutoLogout = () => {
       } catch (err) {
         alert("Your session expired!");
         navigate("/");
+        cookieStore.delete(token)
       }
     }, 15000); // ping every 15 seconds
 

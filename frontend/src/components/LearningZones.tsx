@@ -70,7 +70,7 @@ const zones = [
       "Memory matching with planets 🪐",
       "Breathing with shooting stars 🌠",
     ],
-    to: "https://finaladhd-game2.vercel.app/",
+    to: "https://finalneurovia.vercel.app/",
   },
 ];
 

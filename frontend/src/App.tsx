@@ -14,8 +14,7 @@ import Dashboard from "./pages/dashboard";
 import ProtectedRoute from "./components/protectedRoute";
 import Instruction2 from "./pages/dyslexia/instruction2";
 import Instruction3 from "./pages/dyslexia/instruction3";
-
-
+import Profile from "./pages/profile"
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -81,6 +80,14 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />
