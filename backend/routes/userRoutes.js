@@ -4,6 +4,8 @@ const userModel = require('../models/userModel')
 const bcrypt = require('bcrypt')
 const { generateToken } = require('../utils/generateToken')
 const db = require('../configs/mongoose.connection')
+const Session = require('../models/sessionModel')
+const jwt = require('jsonwebtoken')
 
 router.post("/login", async (req, res) => {
   try {
@@ -22,10 +24,21 @@ router.post("/login", async (req, res) => {
 
     const token = generateToken(existingUser);
 
+    // Create session
+    const session = await Session.create({
+      userId: existingUser._id,
+      activeTimeMinutes: 5, // set max active time here
+    });
+
+    // Attach session ID to token
+    const tokenWithSession = jwt.sign(
+      { userId: existingUser._id, sessionId: session._id },
+      process.env.JWT_KEY
+    );
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // true in production (HTTPS)
+      secure: false, // true in production
       sameSite: "Lax",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -36,7 +49,8 @@ router.post("/login", async (req, res) => {
         id: existingUser._id,
         fullName: existingUser.fullname,
         email: existingUser.email,
-      }, token
+      },
+      token: tokenWithSession
     });
   } catch (error) {
     console.error("Login error:", error.message);
@@ -84,6 +98,33 @@ router.post('/signup', async (req, res) => {
     });
   } catch (error) {
     console.error("Signup error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+router.post("/logout", async (req, res) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.status(400).json({ message: "No active session" });
+    }
+
+    // Clear cookie
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: false, // set to true in production with HTTPS
+      sameSite: "Lax",
+    });
+
+    // Optional: deactivate session in DB
+    // If you included sessionId in JWT payload
+    // const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // await Session.findByIdAndUpdate(decoded.sessionId, { isActive: false });
+
+    return res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.error("Logout error:", error.message);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });

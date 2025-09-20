@@ -6,7 +6,8 @@ const axios = require('axios');
 const multer = require('multer');
 // const fetch = require('node-fetch')
 const fs = require('fs')
-const path = require('path')
+const path = require('path');
+const { checkSession } = require('../middlewares/session');
 
 
 // Configure Multer storage
@@ -31,7 +32,7 @@ const upload = multer({
   },
 });
 
-router.get('/story', async (req, res) => {
+router.get('/story',checkSession, async (req, res) => {
   try {
     
     const response = await fetch(
@@ -77,7 +78,7 @@ Return only the story text — do not add any introductions, explanations, or co
   }
 })
 
-router.post("/handwriting/upload", upload.single("handwriting"), async (req, res) => {
+router.post("/handwriting/upload",checkSession, upload.single("handwriting"), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: "No file uploaded." });
 
   const imagePath = req.file.path;

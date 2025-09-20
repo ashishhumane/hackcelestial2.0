@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 const gameModel = require('../models/gameplayedModel')
 const authenticated = require('../middlewares/authmiddleware')
+const { checkSession } = require('../middlewares/session')
 
-router.post('/alphabet-game/result',authenticated, async (req, res) => {
+router.post('/alphabet-game/result',authenticated,checkSession, async (req, res) => {
   try {
         const userId = req.user.id;
         const { gameName, score, timePlayed, gameData } = req.body;

@@ -6,7 +6,9 @@ const bcrypt = require('bcrypt')
 const { generateToken } = require('../utils/generateToken')
 const db = require('../configs/mongoose.connection')
 const verify = require('../middlewares/authmiddleware')
+// const {  } = require('../middlewares/session')
 const API_KEY = process.env.API_KEY
+
 router.get('/user', verify, (req, res) => {
   try {
     // req.user is already set by the middleware
@@ -22,6 +24,10 @@ router.get('/user', verify, (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }
+});
+
+router.get("/",  (req, res) => {
+  res.json({ message: "Welcome to your dashboard!" });
 });
 
 router.get('/games', verify, async (req, res) => {
@@ -55,7 +61,8 @@ Analyze the following JSON game data and return a structured JSON report with th
     },
     "mostPlayedGame": string
   },
-  "trend": string
+  "trend": string,
+  "Guidance":string
 }
 
 Rules:
@@ -127,6 +134,8 @@ router.get("/report/data", verify, async (req, res) => {
     res.status(500).json({ message: "Failed to generate dataset" });
   }
 });
+
+
 
 
 

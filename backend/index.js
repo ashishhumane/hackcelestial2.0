@@ -5,6 +5,7 @@ const userRoutes = require('./routes/userRoutes')
 const dyslexiaRoutes = require('./routes/dyslexiaRoutes')
 const dysgraphiaRoutes = require('./routes/dysgraphiaRoutes')
 const dashboardRoutes = require('./routes/dashboardRoutes')
+const dyscalculiaRoutes = require('./routes/dyscalculiaRoute')
 const cors = require('cors')
 app.use(
   cors({
@@ -12,7 +13,9 @@ app.use(
       "http://localhost:8080",
       "https://doodle-path-stories.vercel.app",
       "http://localhost:8081",
-      "https://candyisland.vercel.app/"
+      "https://candyisland.vercel.app/",
+      "https://finalneurovia.vercel.app/",
+      "https://hackcelestial2-0.vercel.app/"
     ],
     credentials: true,
   })
@@ -28,6 +31,7 @@ app.get('/',(req, res) => {
 app.use('/api/user', userRoutes)
 app.use('/api/dyslexia',dyslexiaRoutes)
 app.use('/api/dysgraphia',dysgraphiaRoutes)
+app.use('/api/dyscalculia',dyscalculiaRoutes)
 app.use('/api/dashboard',dashboardRoutes)
 
 app.listen(3000,() => {
